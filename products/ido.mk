@@ -1,3 +1,4 @@
+#
 # Copyright (C) 2016 The CyanogenMod Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,17 +12,26 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
 
-include $(CLEAR_VARS)
+$(call inherit-product, device/xiaomi/ido/full_ido.mk)
 
-LOCAL_MODULE := ambientsdk
-LOCAL_MODULE_CLASS := JAVA_LIBRARIES
-LOCAL_UNINSTALLABLE_MODULE := true
+# Inherit some common AICP stuff.
+$(call inherit-product, vendor/aicp/configs/common.mk)
 
-LOCAL_MAVEN_REPO := https://repo1.maven.org/maven2
-LOCAL_MAVEN_GROUP := com.cyngn.ambient
-LOCAL_MAVEN_ARTIFACT := ambientsdk
-LOCAL_MAVEN_VERSION := 1.6.0-147069776-39fe2d07
-LOCAL_MAVEN_PACKAGING := aar
+# Inherit telephony stuff
+$(call inherit-product, vendor/aicp/configs/telephony.mk)
 
-include $(BUILD_MAVEN_PREBUILT)
+PRODUCT_NAME := aicp_ido
+BOARD_VENDOR := Xiaomi
+
+PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
+
+# AICP Device Maintainer
+PRODUCT_BUILD_PROP_OVERRIDES += \
+        DEVICE_MAINTAINERS="Anik khan (Anik1199)"
+
+# Boot animation
+TARGET_SCREEN_HEIGHT := 1280
+TARGET_SCREEN_WIDTH := 720
+-include vendor/aicp/configs/bootanimation.mk
